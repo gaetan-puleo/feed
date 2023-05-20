@@ -27,4 +27,4 @@ jobs:
         run: |
           git checkout -b rss
           git commit -a -m "Add update feed"
-          git push origin rss
+          git push origin rss -f
