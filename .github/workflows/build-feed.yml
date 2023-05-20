@@ -1,6 +1,9 @@
 name: build feed
 run-name: Build RSS Feed
 on:
+  push:
+    branches:
+      - main
   schedule:
     - cron: '0 2 * * *'
 jobs:
@@ -20,5 +23,8 @@ jobs:
         run: |
           git config --global user.name "rss bot"
           git config --global user.email "rss-bot@users.noreply.github.com"
+      - name : push to rss
+      - run: |
+          git checkout -b rss
           git commit -a -m "Add update feed"
-          git push
+          git push origin rss
