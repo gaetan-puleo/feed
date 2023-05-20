@@ -1,0 +1,24 @@
+name: build feed
+run-name: Build RSS Feed
+on:
+  schedule:
+    - cron: '0 2 * * *'
+jobs:
+  build-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.PAT}}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: node src/index.js
+      - run: git add build -f
+      - name: Commit files
+        run: |
+          git config --global user.name "rss bot"
+          git config --global user.email "rss-bot@users.noreply.github.com"
+          git commit -a -m "Add update feed"
+          git push
